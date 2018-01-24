@@ -26,7 +26,7 @@ namespace Demo_TheTravelingSalesperson
             int optionUno = startPosY + 1;
             int optionDos = startPosY + 2;
 
-
+            
             bool yn = true;
             bool optionSelected = false;
             Console.CursorVisible = false;
