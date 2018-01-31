@@ -17,6 +17,10 @@ namespace Demo_TheTravelingSalesperson
         private string _firstName;
         private string _lastName;
         private List<string> _citiesVisited;
+        private Product _currentStock;
+
+        
+
 
         public string AccountID
         {
@@ -38,9 +42,24 @@ namespace Demo_TheTravelingSalesperson
             get { return _citiesVisited; }
             set { _citiesVisited = value; }
         }
+        public Product CurrentStock
+        {
+            get { return _currentStock; }
+            set { _currentStock = value; }
+        }
         public Salesperson()
         {
             _citiesVisited = new List<string>();
+            _currentStock = new Product();
+        }
+        public Salesperson(string firstName, string lastName, string accountID)
+        {
+            _firstName = firstName;
+            _lastName = lastName;
+            _accountID = accountID;
+
+            _citiesVisited = new List<string>();
+            _currentStock = new Product();
         }
 
 

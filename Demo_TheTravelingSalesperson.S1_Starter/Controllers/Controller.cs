@@ -83,6 +83,18 @@ namespace Demo_TheTravelingSalesperson
                     case MenuOption.Travel:
                         Travel();
                         break;
+                    case MenuOption.Buy:
+                        Buy();
+                        break;
+                    case MenuOption.Sell:
+                        Sell();
+                        break;
+                    case MenuOption.SelectNewProduct:
+                        NewProduct();
+                        break;
+                    case MenuOption.DisplayInventory:
+                        DisplayInventory();
+                        break;
                     case MenuOption.DisplayCities:
                         DisplayCities();
                         break;
@@ -90,6 +102,7 @@ namespace Demo_TheTravelingSalesperson
                         DisplayAccounInfo();
                         break;
                     case MenuOption.Exit:
+                        Exit();
                         break;
                     default:
                         break;
@@ -102,6 +115,14 @@ namespace Demo_TheTravelingSalesperson
             //Close the application
             Environment.Exit(1);
         }
+        private void NewProduct()
+        {
+            _consoleView.DisplayProdToBuyandSell(_salesperson);
+        }
+        private void Exit()
+        {
+            _consoleView.DisplayExitPrompt();
+        }
         public void Travel()
         {
             string nextCity;
@@ -110,5 +131,28 @@ namespace Demo_TheTravelingSalesperson
 
             _salesperson.CitiesVisited.Add(nextCity);
         }
+
+
+        private void Buy()
+        {
+            int numberOfUnits = _consoleView.DisplayGetNumberOfUnitsToBuy(_salesperson.CurrentStock);
+            _salesperson.CurrentStock.AddProducts(numberOfUnits);
+        }
+
+        private void Sell()
+        {
+            int numberOfUnits = _consoleView.DisplayGetNumberOfUnitsToSell(_salesperson.CurrentStock);
+            _salesperson.CurrentStock.SubtractProducts(numberOfUnits);
+
+            if (_salesperson.CurrentStock.OnBackorder)
+            {
+                _consoleView.DisplayBackorderNotification(_salesperson.CurrentStock, numberOfUnits);
+            }
+        }
+        private void DisplayInventory()
+        {
+            _consoleView.DisplayInventory(_salesperson.CurrentStock);
+        }
+
     }
 }

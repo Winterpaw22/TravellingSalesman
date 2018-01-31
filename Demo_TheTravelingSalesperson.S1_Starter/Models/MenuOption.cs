@@ -10,6 +10,10 @@ namespace Demo_TheTravelingSalesperson
     {
         None,
         Travel,
+        Buy,
+        Sell,
+        SelectNewProduct,
+        DisplayInventory,
         DisplayCities,
         DisplayAccountInfo,
         Exit
