@@ -16,6 +16,9 @@ namespace Demo_TheTravelingSalesperson
         DisplayInventory,
         DisplayCities,
         DisplayAccountInfo,
+        SetupAccount,
+        SaveAccount,
+        LoadAccount,
         Exit
     }
 }

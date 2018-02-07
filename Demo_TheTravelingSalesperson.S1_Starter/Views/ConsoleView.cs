@@ -112,11 +112,21 @@ namespace Demo_TheTravelingSalesperson
         /// </summary>
         public void DisplayAccountInfo(Salesperson salesperson)
         {
+            string gender;
+            if (salesperson.Gender)
+            {
+                gender = "Boy";
+            }
+            else
+            {
+                gender = "Girl";
+            }
             ConsoleUtil.HeaderText = "Account Info";
             ConsoleUtil.DisplayReset();
 
             ConsoleUtil.DisplayMessage("First Name: " + salesperson.FirstName);
             ConsoleUtil.DisplayMessage("Last Name: " + salesperson.LastName);
+            ConsoleUtil.DisplayMessage("Gender: " + gender);
             ConsoleUtil.DisplayMessage("Account ID: " + salesperson.AccountID);
 
             DisplayContinuePrompt();
@@ -140,7 +150,21 @@ namespace Demo_TheTravelingSalesperson
             DisplayContinuePrompt();
         }
 
+        public MenuOption MainMenu()
+        {
+            MenuOption userMenuChoice = MenuOption.None;
+            bool usingMenu = true;
+            while (usingMenu)
+            {
+                MenuHandler.ChoiceSelectionCursor("");
+            }
 
+
+
+
+
+            return userMenuChoice;
+        }
         /// <summary>
         /// prompts user for new city and returns it as a string
         /// </summary>
@@ -266,6 +290,7 @@ namespace Demo_TheTravelingSalesperson
 
         public Salesperson DisplaySetupAccount()
         {
+            string placehold;
             Salesperson salesperson = new Salesperson();
 
             ConsoleUtil.HeaderText = "Account Setup";
@@ -283,14 +308,20 @@ namespace Demo_TheTravelingSalesperson
             ConsoleUtil.DisplayPromptMessage("Enter your account ID: ");
             salesperson.AccountID = Console.ReadLine();
 
+
+            //logic is IfPartPresent then true
+            //IfPartNotPresent then false
+            salesperson.Gender = MenuHandler.ChoiceSelectionCursor("Are you a Boy, Or a Girl?", "Boy", "Girl");
+            
+
             ConsoleUtil.DisplayPromptMessage("Enter your starting City: ");
             salesperson.CitiesVisited.Add(Console.ReadLine());
 
             salesperson.CurrentStock.Type = Product.ProductType.Spotted;
-            ConsoleUtil.DisplayMessage("You start of selling spotted product");
-            
+            ConsoleUtil.DisplayMessage("You start off selling spotted product");
 
-            ConsoleUtil.DisplayMessage("");
+            DisplayContinuePrompt();
+            
 
             ConsoleUtil.DisplayReset();
             return salesperson;

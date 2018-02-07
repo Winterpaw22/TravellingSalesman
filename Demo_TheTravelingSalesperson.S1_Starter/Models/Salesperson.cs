@@ -16,6 +16,7 @@ namespace Demo_TheTravelingSalesperson
         private string _accountID;     
         private string _firstName;
         private string _lastName;
+        private bool _gender;
         private List<string> _citiesVisited;
         private Product _currentStock;
 
@@ -36,6 +37,11 @@ namespace Demo_TheTravelingSalesperson
         {
             get { return _lastName; }
             set { _lastName = value; }
+        }
+        public bool Gender
+        {
+            get { return _gender; }
+            set { _gender = value; }
         }
         public List<string> CitiesVisited
         {
