@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Data\DataSettings.cs" />
+    <Compile Include="Data\XmlServices.cs" />
     <Compile Include="Models\MenuOption.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Salesperson.cs" />
@@ -56,6 +58,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\Data.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

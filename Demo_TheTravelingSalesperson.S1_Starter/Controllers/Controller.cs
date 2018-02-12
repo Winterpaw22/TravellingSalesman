@@ -33,8 +33,7 @@ namespace Demo_TheTravelingSalesperson
 
             // begins running the application UI
 
-
-            ManageApplicationLoop();
+            ManageMainMenuScreen();
 
 
         }
@@ -62,11 +61,6 @@ namespace Demo_TheTravelingSalesperson
         {
             MenuOption userMenuChoice;
 
-            _consoleView.DisplayWelcomeScreen();
-
-            //Initial Salesperson account
-
-            _salesperson = _consoleView.DisplaySetupAccount();
 
 
             //App loop
@@ -101,8 +95,15 @@ namespace Demo_TheTravelingSalesperson
                     case MenuOption.DisplayAccountInfo:
                         DisplayAccounInfo();
                         break;
+                    case MenuOption.SaveAccount:
+                        DisplaySaveAccountInfo();
+                        break;
+                    case MenuOption.LoadAccount:
+                        DisplayLoadAccountInfo();
+                        break;
                     case MenuOption.Exit:
                         Exit();
+                        _usingApplication = false;
                         break;
                     default:
                         break;
@@ -115,6 +116,36 @@ namespace Demo_TheTravelingSalesperson
             //Close the application
             Environment.Exit(1);
         }
+
+        private void ManageMainMenuScreen()
+        {
+            MenuOption userMenuChoice;
+
+            _consoleView.DisplayWelcomeScreen();
+
+            userMenuChoice = _consoleView.MainMenu();
+
+            switch (userMenuChoice)
+            {
+                case MenuOption.None:
+                    break;
+                case MenuOption.SetupAccount:
+                    _salesperson = _consoleView.DisplaySetupAccount();
+
+                    ManageApplicationLoop();
+                    break;
+                case MenuOption.StartFromSave:
+                    DisplayLoadAccountInfo();
+                    ManageApplicationLoop();
+                    break;
+                case MenuOption.Exit:
+                    break;
+                default:
+                    ConsoleUtil.DisplayMessage("I have no words that explain how amazed I am you got this to display");
+                    break;
+            }
+        }
+
         private void NewProduct()
         {
             _consoleView.DisplayProdToBuyandSell(_salesperson);
@@ -154,5 +185,43 @@ namespace Demo_TheTravelingSalesperson
             _consoleView.DisplayInventory(_salesperson.CurrentStock);
         }
 
+
+        private void DisplaySaveAccountInfo()
+        {
+            bool saveAccountInfo = false;
+
+            saveAccountInfo = _consoleView.DisplaySaveAccountInfo(_salesperson);
+
+            if (saveAccountInfo)
+            {
+                XmlServices xmlServices = new XmlServices(DataSettings.dataFilePathXml);
+
+                xmlServices.WriteSalespersonToDataFile(_salesperson);
+
+                _consoleView.DisplayConfirmSaveAccountInfo();
+            }
+        }
+
+        private void DisplayLoadAccountInfo()
+        {
+            bool loadAccountInfo = false;
+
+            if (_salesperson.AccountID != "")
+            {
+                loadAccountInfo = _consoleView.DisplayLoadAccountInfo();
+            }
+            else
+            {
+                loadAccountInfo = _consoleView.DisplayLoadAccountInfo();
+            }
+            if (loadAccountInfo)
+            {
+                XmlServices xmlServices = new XmlServices(DataSettings.dataFilePathXml);
+
+                _salesperson = xmlServices.ReadSalespersonFromDataFile();
+
+                _consoleView.DisplayConfirmLoadAccountInfo(_salesperson);
+            }
+        }
     }
 }

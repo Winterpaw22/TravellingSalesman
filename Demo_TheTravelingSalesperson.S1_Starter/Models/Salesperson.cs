@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Demo_TheTravelingSalesperson
 {
-    class Salesperson
+    public class Salesperson
     {
 
 
@@ -18,6 +18,7 @@ namespace Demo_TheTravelingSalesperson
         private string _lastName;
         private bool _gender;
         private List<string> _citiesVisited;
+        private int _age;
         private Product _currentStock;
 
         
@@ -53,6 +54,12 @@ namespace Demo_TheTravelingSalesperson
             get { return _currentStock; }
             set { _currentStock = value; }
         }
+        public int Age
+        {
+            get { return _age; }
+            set { _age = value; }
+        }
+
         public Salesperson()
         {
             _citiesVisited = new List<string>();

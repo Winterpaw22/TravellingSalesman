@@ -19,6 +19,7 @@ namespace Demo_TheTravelingSalesperson
         SetupAccount,
         SaveAccount,
         LoadAccount,
-        Exit
+        Exit,
+        StartFromSave
     }
 }

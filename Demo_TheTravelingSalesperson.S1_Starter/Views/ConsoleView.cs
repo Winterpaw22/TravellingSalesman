@@ -59,8 +59,6 @@ namespace Demo_TheTravelingSalesperson
             ConsoleUtil.DisplayMessage("Thank you for using the application. Press any key to Exit.");
 
             Console.ReadKey();
-
-            Environment.Exit(1);
         }
 
 
@@ -84,10 +82,6 @@ namespace Demo_TheTravelingSalesperson
             sb.AppendFormat("or sell widgets.");
             ConsoleUtil.DisplayMessage(sb.ToString());
             ConsoleUtil.DisplayMessage("");
-
-            sb.Clear();
-            sb.AppendFormat("Your first task will be to set up your account details.");
-            ConsoleUtil.DisplayMessage(sb.ToString());
 
             DisplayContinuePrompt();
         }
@@ -127,10 +121,13 @@ namespace Demo_TheTravelingSalesperson
             ConsoleUtil.DisplayMessage("First Name: " + salesperson.FirstName);
             ConsoleUtil.DisplayMessage("Last Name: " + salesperson.LastName);
             ConsoleUtil.DisplayMessage("Gender: " + gender);
+            ConsoleUtil.DisplayMessage("Age: " + salesperson.Age);
             ConsoleUtil.DisplayMessage("Account ID: " + salesperson.AccountID);
 
             DisplayContinuePrompt();
         }
+
+
         /// <summary>
         /// Display all cities traveled to in chronological order
         /// </summary>
@@ -150,18 +147,42 @@ namespace Demo_TheTravelingSalesperson
             DisplayContinuePrompt();
         }
 
+
+
         public MenuOption MainMenu()
         {
+            ConsoleUtil.HeaderText = "The Travelling Salesman";
+            ConsoleUtil.DisplayReset();
             MenuOption userMenuChoice = MenuOption.None;
             bool usingMenu = true;
             while (usingMenu)
             {
-                MenuHandler.ChoiceSelectionCursor("");
+                int selection = MenuHandler.ChoiceSelectionCursor("Move the cursor with arrow keys and press enter to accept", "SetupAccount", "LoadAccount", "Exit");
+                ConsoleUtil.DisplayReset();
+                switch (selection)
+                {
+                    case 1:
+                        //Initial Salesperson account
+                        userMenuChoice = MenuOption.SetupAccount;
+                        usingMenu = false;
+                        break;
+                    case 2:
+                        //Start Off From A Save File
+                        userMenuChoice = MenuOption.StartFromSave;
+                        usingMenu = false;
+                        break;
+                    case 3:
+                        userMenuChoice = MenuOption.Exit;
+                        usingMenu = false;
+                        break;
+                    default:
+                        ConsoleUtil.DisplayMessage("Please.... just tell me how you did it....");
+                        usingMenu = false;
+                        break;
+                }
+
+
             }
-
-
-
-
 
             return userMenuChoice;
         }
@@ -217,10 +238,11 @@ namespace Demo_TheTravelingSalesperson
                     "\t" + "5. Display Inventory" + Environment.NewLine +
                     "\t" + "6. Display Cities" + Environment.NewLine +
                     "\t" + "7. Display Account Info" + Environment.NewLine +
+                    "\t" + "S. Save Account" + Environment.NewLine +
+                    "\t" + "L. Load Account" + Environment.NewLine +
                     "\t" + "E. Exit" + Environment.NewLine);
-                //MenuHandler.ChoiceSelectionCursor(3,4,"Please type the number of your menu choice.","Travel","Display Cities");
 
-                //
+
                 // get and process the user's response
                 // note: ReadKey argument set to "true" disables the echoing of the key press
                 //
@@ -254,6 +276,18 @@ namespace Demo_TheTravelingSalesperson
                         break;
                     case '7':
                         userMenuChoice = MenuOption.DisplayAccountInfo;
+                        usingMenu = false;
+                        break;
+
+                    case 'S':
+                    case 's':
+                        userMenuChoice = MenuOption.SaveAccount;
+                        usingMenu = false;
+                        break;
+
+                    case 'L':
+                    case 'l':
+                        userMenuChoice = MenuOption.LoadAccount;
                         usingMenu = false;
                         break;
                     case 'E':
@@ -290,8 +324,10 @@ namespace Demo_TheTravelingSalesperson
 
         public Salesperson DisplaySetupAccount()
         {
-            string placehold;
             Salesperson salesperson = new Salesperson();
+            int age = 18;
+            salesperson.Age = age;
+
 
             ConsoleUtil.HeaderText = "Account Setup";
             ConsoleUtil.DisplayReset();
@@ -305,12 +341,13 @@ namespace Demo_TheTravelingSalesperson
             ConsoleUtil.DisplayPromptMessage("Last Name: ");
             salesperson.LastName = Console.ReadLine();
 
+            ConsoleUtil.DisplayPromptMessage("Age: ");
+            salesperson.Age = MenuHandler.IntValidation("Age");
+
+
             ConsoleUtil.DisplayPromptMessage("Enter your account ID: ");
             salesperson.AccountID = Console.ReadLine();
 
-
-            //logic is IfPartPresent then true
-            //IfPartNotPresent then false
             salesperson.Gender = MenuHandler.ChoiceSelectionCursor("Are you a Boy, Or a Girl?", "Boy", "Girl");
             
 
@@ -487,5 +524,86 @@ namespace Demo_TheTravelingSalesperson
             }
             Console.WriteLine("");
         }
+
+        public void DisplayConfirmLoadAccountInfo(Salesperson salesperson)
+        {
+            ConsoleUtil.HeaderText = "Load Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("Account information loaded");
+
+            DisplayAccountDetail(salesperson);
+
+            DisplayContinuePrompt();
+
+        }
+
+        public void DisplayConfirmSaveAccountInfo()
+        {
+            ConsoleUtil.HeaderText = "Save Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("Account information saved");
+
+            DisplayContinuePrompt();
+        }
+
+        public bool DisplayLoadAccountInfo()
+        {
+            bool userResponse;
+
+
+            ConsoleUtil.HeaderText = "LoadAccount";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("");
+            userResponse = MenuHandler.ChoiceSelectionCursor("Load the account Information?");
+
+
+            return userResponse;
+        }
+
+
+        public bool DisplaySaveAccountInfo(Salesperson salesperson)
+        {
+            bool userResponse;
+
+
+            ConsoleUtil.HeaderText = "Save Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("The current account Information");
+            DisplayAccountDetail(salesperson);
+
+
+
+            ConsoleUtil.DisplayMessage("");
+            userResponse = MenuHandler.ChoiceSelectionCursor("Save the account Information?");
+
+
+            return userResponse;
+        }
+        public void DisplayAccountDetail(Salesperson salesperson)
+        {
+            string gender;
+            if (salesperson.Gender)
+            {
+                gender = "Boy";
+            }
+            else
+            {
+                gender = "Girl";
+            }
+
+            ConsoleUtil.DisplayMessage("First Name: " + salesperson.FirstName);
+            ConsoleUtil.DisplayMessage("Last Name: " + salesperson.LastName);
+            ConsoleUtil.DisplayMessage("Gender: " + gender);
+            ConsoleUtil.DisplayMessage("Account ID: " + salesperson.AccountID);
+            ConsoleUtil.DisplayMessage("Product Selling: " + salesperson.CurrentStock.Type.ToString());
+            ConsoleUtil.DisplayMessage("Amount of Product: " + salesperson.CurrentStock.NumberOfUnits.ToString());
+
+            DisplayContinuePrompt();
+        }
+
     }
 }

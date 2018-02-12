@@ -361,7 +361,65 @@ namespace Demo_TheTravelingSalesperson
             return action;
         }
 
+        /// <summary>
+        /// NO limit version
+        /// </summary>
+        /// <returns></returns>
+        public static int IntValidation(string question)
+        {
+            int validInt = 0;
+            bool intValid = false;
 
+            while (!intValid)
+            {
+                
+                if (int.TryParse(Console.ReadLine(), out validInt))
+                {
+                    intValid = true;
+                }
+                else
+                {
+                    ConsoleUtil.DisplayMessage("\n Please Enter a Valid Interger");
+                    Console.CursorTop = Console.CursorTop - 2;
+                    Console.CursorLeft = 3;
+                    Console.WriteLine(question + ":                                                                    ");
+                    Console.CursorTop--;
+                    Console.CursorLeft = 7;
+                }
+            }
+            Console.WriteLine("                                                                        ");
+
+
+            return validInt;
+        }
+
+        public static int IntValidation(string question, int minValue, int maxValue, int maxAttempts)
+        {
+            int validInt = 0;
+            bool intValid = false;
+
+            while (!intValid)
+            {
+
+                if (int.TryParse(Console.ReadLine(), out validInt))
+                {
+                    intValid = true;
+                }
+                else
+                {
+                    ConsoleUtil.DisplayMessage("\n Please Enter a Valid Interger");
+                    Console.CursorTop = Console.CursorTop - 2;
+                    Console.CursorLeft = 3;
+                    Console.WriteLine(question + ":                                                                    ");
+                    Console.CursorTop--;
+                    Console.CursorLeft = 7;
+                }
+            }
+            Console.WriteLine("                                                                        ");
+
+
+            return validInt;
+        }
 
     }
 }
